@@ -1,11 +1,12 @@
+import { Video } from '../../shared/models/video';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { YoutubeService } from './youtube.service';
 import { ContextService } from '../../shared/context.service';
 
-import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'youtube',
@@ -17,24 +18,28 @@ export class YoutubeComponent implements OnInit {
 
   private loader: any;
   private country: any;
-	private trendingVideos: any[] = [];
+  private trendingVideos: Video[] = [];
   private embedUrl: any;
   private videoId: any;
-  @ViewChild('modal')
-  private modal: ModalComponent;
 
-	constructor(private youtubeService: YoutubeService, private sanitizer: DomSanitizer, public appContext: ContextService) {
-
+  constructor(
+    private youtubeService: YoutubeService,
+    public appContext: ContextService,
+    private router: Router) {
   }
+
   private videoLoader: any;
 
-  public loadVideo() : void {
+  public loadVideo(): void {
     console.log('AAA');
     this.videoLoader = false;
   }
   ngOnInit() {
-    this.modal.backdrop = false;
     this.loadVideos('');
+    this.subscribeToCountryChanges()
+  }
+
+  private subscribeToCountryChanges() {
     this.appContext.countryChanged.subscribe(
       (lang) => {
         this.country = this.appContext.getCountry();
@@ -42,10 +47,13 @@ export class YoutubeComponent implements OnInit {
       }
     );
   }
-  public loadVideos(countryCode: string) : void {
+
+
+
+  private loadVideos(countryCode: string): void {
     this.loader = true;
     // several api calls[p]
-    this.youtubeService.getTrendingVideos(this.country).subscribe((result)=>{
+    this.youtubeService.getTrendingVideos(this.country).subscribe((result) => {
       for (var i = 0; i < result.items.length; i++) {
         this.trendingVideos[i] = {
           id: result.items[i].id,
@@ -53,33 +61,13 @@ export class YoutubeComponent implements OnInit {
           thumbnail: result.items[i].snippet.thumbnails.high.url,
           publishedAt: moment(result.items[i].snippet.publishedAt).fromNow()
         };
-        this.getVideoStats(i, result.items[i].id);
       }
       this.loader = false;
     });
   }
 
-  public getVideoStats(videoIndex: number, videoId: any) : void {
-    this.youtubeService.getVideoDetails(videoId).subscribe((result)=>{
-      this.trendingVideos[videoIndex].viewCount = result.items[0].statistics.viewCount;
-      this.trendingVideos[videoIndex].likeCount = result.items[0].statistics.likeCount;
-    });
+  onVideoClick(id) {
+    this.router.navigate(['/watch', id])
   }
 
-  public openVideoPlayer(videoId: any) : void {
-    this.videoLoader = true;
-    this.videoId = videoId;
-    this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + videoId + '?autoplay=1');
-    this.modal.open();
-  }
-
-  // public modalDismiss() {
-  //     this.embedUrl = null;
-  // }
-
-  // public modalClose() {
-  //   console.log('VIDEO PLAYER CLOSED !!');
-  //   this.modal.close();
-  //   this.embedUrl = null;
-  // }
 }

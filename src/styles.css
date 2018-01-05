@@ -19,16 +19,7 @@
 .dropdown-menu .active {
 	color: #000000;
 	background-color: rgba(0,0,0,0) }
-.modal {
-  background-color: rgba(0,0,0,0.6); }
-.modal-header {
-  display: none; }
-.modal-footer {
-  border: 0;
-  background-color: #000000; }
-.modal-content {
-		border: 0;
-    background-color: #000000; }
+
 
 /* youtube component styling */
 #youtube {
@@ -70,6 +61,4 @@
 #youtube .video-desc {
 	font-size: 12px;
 	padding: 5px 10px 5px 10px; }
-.modal-body {
-	padding: 0px;
-}
+
