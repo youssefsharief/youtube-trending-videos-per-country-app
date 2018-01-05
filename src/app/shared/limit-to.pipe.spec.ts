@@ -8,4 +8,18 @@ describe('LimitToPipe', () => {
     let pipe = new LimitToPipe();
     expect(pipe).toBeTruthy();
   });
+
+  it('should remove extra characters', () => {
+    let pipe = new LimitToPipe();
+    expect(pipe.transform('Big Huge title', "5")).toBe('Big H....');
+  });
+
+  it('should return original in case length is lower than limit', () => {
+    let pipe = new LimitToPipe();
+    expect(pipe.transform('Big', "5")).toBe('Big');
+  });
+
+
+
+
 });

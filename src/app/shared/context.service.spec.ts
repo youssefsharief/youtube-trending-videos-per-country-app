@@ -10,7 +10,9 @@ describe('ContextService', () => {
     });
   });
 
-  it('should ...', inject([ContextService], (service: ContextService) => {
-    expect(service).toBeTruthy();
+  fit('should set country', inject([ContextService], (service: ContextService) => {
+    service.setCountry('Egy')
+    expect(service.country).toBe('Egy')
+    expect(service.getCountry()).toBe('Egy')
   }));
 });
