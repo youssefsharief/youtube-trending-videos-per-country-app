@@ -9,63 +9,66 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'youtube',
-  templateUrl: './youtube.component.html',
-  styleUrls: ['./youtube.component.css'],
+    selector: 'youtube',
+    templateUrl: './youtube.component.html',
+    styleUrls: ['./youtube.component.css'],
 })
 
 export class YoutubeComponent implements OnInit {
 
-  private loader: any;
-  private country: any;
-  private trendingVideos: Video[] = [];
-  public isErrorInApi: boolean
-  constructor(
-    private youtubeService: YoutubeService,
-    public appContext: ContextService,
-    private router: Router) {
-  }
+    private isLoadingVideos: boolean;
+    private country: any;
+    private trendingVideos: Video[] = [];
+    public isErrorInApi: boolean
+    private nextPageToken: string
 
-  private videoLoader: any;
-
-
-  ngOnInit() {
-    this.loadVideos('');
-    this.subscribeToCountryChanges()
-  }
-
-  private subscribeToCountryChanges() {
-    this.appContext.countryChanged.subscribe(
-      (lang) => {
-        this.country = this.appContext.getCountry();
-        this.loadVideos(this.country);
-      }
-    );
-  }
+    constructor(
+        private youtubeService: YoutubeService,
+        public appContext: ContextService,
+        private router: Router) {
+    }
 
 
 
-  private loadVideos(countryCode: string): void {
-    this.loader = true;
-    // several api calls[p]
-    this.youtubeService.getTrendingVideos(this.country).subscribe((result) => {
-      for (var i = 0; i < result.items.length; i++) {
-        this.trendingVideos[i] = {
-          id: result.items[i].id,
-          title: result.items[i].snippet.title,
-          thumbnail: result.items[i].snippet.thumbnails.high.url,
-          publishedAt: moment(result.items[i].snippet.publishedAt).fromNow()
-        };
-      }
-      this.loader = false;
-    }, error => {
-        this.loader = false
-        this.isErrorInApi = true
-    });
-  }
+    ngOnInit() {
+        this.loadVideos();
+        this.subscribeToCountryChanges()
+    }
 
-  onVideoClick(id) {
-    this.router.navigate(['/watch', id])
-  }
+    private subscribeToCountryChanges() {
+        this.appContext.countryChanged.subscribe(
+            (lang) => {
+                this.country = this.appContext.getCountry();
+                this.loadVideos();
+            }
+        );
+    }
+
+
+
+    private loadVideos(): void {
+        if(!this.nextPageToken) this.isLoadingVideos = true;
+        this.youtubeService.getTrendingVideos(this.country, this.nextPageToken).subscribe((result) => {
+            this.nextPageToken = result.nextPageToken
+            this.trendingVideos = this.trendingVideos.concat(result.items.map(item => ({
+                id: item.id,
+                title: item.snippet.title,
+                thumbnail: item.snippet.thumbnails.high.url,
+                publishedAt: moment(item.snippet.publishedAt).fromNow()
+            })))
+            this.isLoadingVideos = false;
+        }, error => {
+            this.isLoadingVideos = false
+            this.isErrorInApi = true
+        });
+    }
+
+    onVideoClick(id) {
+        this.router.navigate(['/watch', id])
+    }
+
+    onScrollDown() {
+        this.loadVideos()
+    }
 
 }

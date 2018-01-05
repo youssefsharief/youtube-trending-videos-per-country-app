@@ -14,19 +14,20 @@ export class YoutubeService {
 
     constructor(private http: Http, private _jsonp: Jsonp) { }
 
-	getTrendingVideos(country: string) {
-		this.params = new URLSearchParams();
+    getTrendingVideos(country: string, nextPageToken: string) {
+        this.params = new URLSearchParams();
         this.params.set('part', 'snippet, statistics');
         this.params.set('chart', 'mostPopular');
+        if (nextPageToken) this.params.set('pageToken', nextPageToken);
         this.params.set('regionCode', country);
         this.params.set('maxResults', '24');
         this.params.set('key', CONFIG.youtubeApiKey);
         this.options = new RequestOptions({
-        	search: this.params
-    	});
-	    return this.http.get(CONFIG.youtubeEndPoint, this.options)
-	    	.map(res => res.json())
-	        .catch(this.throwError);
+            search: this.params
+        });
+        return this.http.get(CONFIG.youtubeEndPoint, this.options)
+            .map(res => res.json())
+            .catch(this.throwError);
     }
 
     private throwError(error: any) {

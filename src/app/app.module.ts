@@ -12,6 +12,7 @@ import { ContextService } from './shared/context.service';
 import { YoutubeService } from './trends/youtube/youtube.service';
 import { WatchComponent } from './trends/watch/watch.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpModule,
     JsonpModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    InfiniteScrollModule
   ],
   providers: [
     ContextService,
