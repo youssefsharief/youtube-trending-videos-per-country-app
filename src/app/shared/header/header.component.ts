@@ -1,5 +1,5 @@
 import { countries } from '../mock-data/country-list.mock';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
@@ -14,6 +14,7 @@ import { ContextService } from '../context.service';
 })
 export class HeaderComponent implements OnInit {
 
+	@Input() isSearchBar: boolean
 	// might neeed to be removed
 	public selectedCountry: any;
 	public countryList: any[] = countries
@@ -26,7 +27,11 @@ export class HeaderComponent implements OnInit {
 	constructor(public appContext: ContextService) { }
 
 	public selectCountry(country) {
+		console.log(country);
+		
 		if (typeof country === 'object') {
+			console.log(country);
+			
 			this.appContext.setCountry(country.code);
 		}
 	}

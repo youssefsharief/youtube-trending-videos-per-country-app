@@ -38,6 +38,9 @@ export class YoutubeComponent implements OnInit {
     private subscribeToCountryChanges() {
         this.appContext.countryChanged.subscribe(
             (lang) => {
+                console.log('emit received');
+                this.nextPageToken = ''
+                this.trendingVideos = []
                 this.country = this.appContext.getCountry();
                 this.loadVideos();
             }
@@ -47,14 +50,16 @@ export class YoutubeComponent implements OnInit {
 
 
     private loadVideos(): void {
-        if(!this.nextPageToken) this.isLoadingVideos = true;
+        if (!this.nextPageToken) this.isLoadingVideos = true;
         this.youtubeService.getTrendingVideos(this.country, this.nextPageToken).subscribe((result) => {
             this.nextPageToken = result.nextPageToken
             this.trendingVideos = this.trendingVideos.concat(result.items.map(item => ({
                 id: item.id,
                 title: item.snippet.title,
                 thumbnail: item.snippet.thumbnails.high.url,
-                publishedAt: moment(item.snippet.publishedAt).fromNow()
+                publishedAt: moment(item.snippet.publishedAt).fromNow(),
+                viewCount: item.statistics.viewCount,
+                likeCount: item.statistics.likeCount
             })))
             this.isLoadingVideos = false;
         }, error => {
