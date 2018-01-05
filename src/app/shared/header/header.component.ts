@@ -16,22 +16,15 @@ export class HeaderComponent implements OnInit {
 
 	@Input() isSearchBar: boolean
 	// might neeed to be removed
-	public selectedCountry: any;
 	public countryList: any[] = countries
-
 	public search = (text$: Observable<string>) => text$.debounceTime(200).distinctUntilChanged()
 		.map(term => term.length < 2 ? [] : this.countryList.filter(v => new RegExp(term, 'gi').test(v.name)).splice(0, 10));
-
 	public formatter = (x: { name: string }) => x.name;
 
 	constructor(public appContext: ContextService) { }
 
 	public selectCountry(country) {
-		console.log(country);
-		
 		if (typeof country === 'object') {
-			console.log(country);
-			
 			this.appContext.setCountry(country.code);
 		}
 	}
