@@ -27,3 +27,7 @@
 	padding: 0;
 	background-color: #ffffff;
 	box-shadow: 0 2px 9px 0 rgba(0,0,0,0.1); }
+a:hover, a:focus {
+	color: #2a6496;
+	text-decoration: none;
+}
