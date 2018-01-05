@@ -19,9 +19,7 @@ export class YoutubeComponent implements OnInit {
   private loader: any;
   private country: any;
   private trendingVideos: Video[] = [];
-  private embedUrl: any;
-  private videoId: any;
-
+  public isErrorInApi: boolean
   constructor(
     private youtubeService: YoutubeService,
     public appContext: ContextService,
@@ -30,10 +28,7 @@ export class YoutubeComponent implements OnInit {
 
   private videoLoader: any;
 
-  public loadVideo(): void {
-    console.log('AAA');
-    this.videoLoader = false;
-  }
+
   ngOnInit() {
     this.loadVideos('');
     this.subscribeToCountryChanges()
@@ -63,6 +58,9 @@ export class YoutubeComponent implements OnInit {
         };
       }
       this.loader = false;
+    }, error => {
+        this.loader = false
+        this.isErrorInApi = true
     });
   }
 
