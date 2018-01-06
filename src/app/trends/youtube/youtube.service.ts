@@ -14,17 +14,13 @@ export class YoutubeService {
     constructor(private http: HttpClient) { }
 
     getTrendingVideos(country: string, nextPageToken: string) {
-
-        
-        const params = new HttpParams()
-        
-        
-        params.set('part', 'snippet, statistics, status')
-        .set('chart', 'mostPopular')
-        .set('maxResults', '24').set('key', CONFIG.youtubeApiKey)
-        if (nextPageToken) params.set('pageToken', nextPageToken);
-        if (country) params.set('regionCode', country)
-       
+        let params = new HttpParams()
+        params = params
+        .append('part', 'snippet, statistics, status')
+        .append('chart', 'mostPopular')
+        .append('maxResults', '24').append('key', CONFIG.youtubeApiKey)
+        if (nextPageToken) params = params.append('pageToken', nextPageToken);
+        if (country) params = params.append('regionCode', country)      
         return this.http.get(CONFIG.youtubeEndPoint, {params}).catch(this.throwError);
     }
 
