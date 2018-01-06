@@ -14,7 +14,6 @@ describe('AppComponent', () => {
         RouterTestingModule
       ]
     });
-    TestBed.compileComponents();
   });
 
   it('should create the app', async(() => {

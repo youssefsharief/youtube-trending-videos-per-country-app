@@ -1,4 +1,4 @@
-import { countries } from '../mock-data/country-list.mock';
+import { countries } from '../data/country-list';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';

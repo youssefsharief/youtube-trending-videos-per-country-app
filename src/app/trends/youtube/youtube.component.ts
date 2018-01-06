@@ -36,18 +36,15 @@ export class YoutubeComponent implements OnInit {
     }
 
     private subscribeToCountryChanges() {
-        this.appContext.countryChanged.subscribe(
-            (lang) => {
-                console.log('emit received');
-                this.nextPageToken = ''
-                this.trendingVideos = []
-                this.country = this.appContext.getCountry();
-                this.loadVideos();
-            }
-        );
+        this.appContext.countryChanged.subscribe(this.respondToLangChange);
     }
 
-
+    private respondToLangChange(lang) {
+        this.nextPageToken = ''
+        this.trendingVideos = []
+        this.country = this.appContext.getCountry();
+        this.loadVideos();
+    }
 
     private loadVideos(): void {
         if (!this.nextPageToken) this.isLoadingVideos = true;

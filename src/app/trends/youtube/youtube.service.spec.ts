@@ -1,16 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { CommonModule } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
-import { async, getTestBed, TestBed, fakeAsync } from '@angular/core/testing';
-import { MockBackend } from '@angular/http/testing';
-import { Response, ResponseOptions, ResponseType, Request, HttpModule, BaseRequestOptions, Http, XHRBackend } from '@angular/http';
-import { MockConnection } from '@angular/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { YoutubeService } from './youtube.service';
-import { HeaderComponent } from '../../shared/header/header.component';
-import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import * as CONFIG from '../../config';
-import { HttpClient, HttpParams, HttpClientModule } from '@angular/common/http';
 
 describe('YoutubeService', () => {
 
@@ -20,12 +11,8 @@ describe('YoutubeService', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    HttpClientTestingModule
-                ],
-                providers: [
-                    YoutubeService,
-                ]
+                imports: [  HttpClientTestingModule    ],
+                providers: [    YoutubeService,     ]
             });
             httpMock = TestBed.get(HttpTestingController);
             service = TestBed.get(YoutubeService);

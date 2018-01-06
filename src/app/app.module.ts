@@ -1,3 +1,4 @@
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app.routing.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,8 +22,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     LimitToPipe,
     TrendsComponent,
     YoutubeComponent,
-    TrendsComponent,
-    YoutubeComponent,
     WatchComponent
   ],
   imports: [
@@ -33,9 +32,11 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     NgbModule.forRoot(),
     InfiniteScrollModule
   ],
+
   providers: [
     ContextService,
-    YoutubeService
+    YoutubeService,
+    { provide: APP_BASE_HREF, useValue: '/' }
   ],
   bootstrap: [AppComponent]
 })
