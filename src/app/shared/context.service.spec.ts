@@ -10,7 +10,7 @@ describe('ContextService', () => {
     });
   });
 
-  fit('should set country', inject([ContextService], (service: ContextService) => {
+  it('should set country', inject([ContextService], (service: ContextService) => {
     service.setCountry('Egy')
     expect(service.country).toBe('Egy')
     expect(service.getCountry()).toBe('Egy')
