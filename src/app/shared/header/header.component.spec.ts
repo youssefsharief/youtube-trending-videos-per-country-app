@@ -4,16 +4,20 @@ import { DebugElement } from '@angular/core';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/operator/first';
-import { AppModule } from '../../app.module';
 import { HeaderComponent } from './header.component';
+import { SharedModule } from '../shared.module';
+import { ContextService } from '../context.service';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
-
+    let contextServiceStub = { setCountry : (x) => console.log(x)}
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [AppModule],
+            imports: [SharedModule],
+            providers: [
+                {provide: ContextService, useValue: contextServiceStub}
+            ]
         })
     }));
 
@@ -23,7 +27,7 @@ describe('HeaderComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    it('should load successfully', () => {
         expect(component).toBeTruthy();
     });
 

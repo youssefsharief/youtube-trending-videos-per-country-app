@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 
 export class YoutubeComponent implements OnInit {
 
-    private isLoadingVideos: boolean;
+    public areVideosLoading: boolean;
     private country: any;
     private trendingVideos: Video[] = [];
     public isErrorInApi: boolean
@@ -29,25 +29,22 @@ export class YoutubeComponent implements OnInit {
     }
 
 
-
     ngOnInit() {
         this.loadVideos();
         this.subscribeToCountryChanges()
     }
 
     private subscribeToCountryChanges() {
-        this.appContext.countryChanged.subscribe(this.respondToLangChange);
-    }
-
-    private respondToLangChange(lang) {
-        this.nextPageToken = ''
-        this.trendingVideos = []
-        this.country = this.appContext.getCountry();
-        this.loadVideos();
+        this.appContext.countryChanged.subscribe(lang => {
+            this.nextPageToken = ''
+            this.trendingVideos = []
+            this.country = this.appContext.getCountry();
+            this.loadVideos();
+        })
     }
 
     private loadVideos(): void {
-        if (!this.nextPageToken) this.isLoadingVideos = true;
+        if (!this.nextPageToken) this.areVideosLoading = true;
         this.youtubeService.getTrendingVideos(this.country, this.nextPageToken).subscribe((result) => {
             this.nextPageToken = result.nextPageToken
             this.trendingVideos = this.trendingVideos.concat(result.items.map(item => ({
@@ -58,9 +55,9 @@ export class YoutubeComponent implements OnInit {
                 viewCount: item.statistics.viewCount,
                 likeCount: item.statistics.likeCount
             })))
-            this.isLoadingVideos = false;
+            this.areVideosLoading = false;
         }, error => {
-            this.isLoadingVideos = false
+            this.areVideosLoading = false
             this.isErrorInApi = true
         });
     }

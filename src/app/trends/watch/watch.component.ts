@@ -6,10 +6,11 @@ import 'rxjs/add/operator/first';
 @Component({
     selector: 'watch',
     templateUrl: 'watch.component.html',
+    styleUrls: ['./watch.component.css']
 })
 export class WatchComponent {
 
-    private isVideoLoading: boolean;
+    public isVideoLoading: boolean;
     public embedUrl: SafeResourceUrl
     constructor(
         private route: ActivatedRoute,

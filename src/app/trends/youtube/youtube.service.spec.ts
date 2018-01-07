@@ -11,15 +11,15 @@ describe('YoutubeService', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [  HttpClientTestingModule    ],
-                providers: [    YoutubeService,     ]
+                imports: [HttpClientTestingModule],
+                providers: [YoutubeService,]
             });
             httpMock = TestBed.get(HttpTestingController);
             service = TestBed.get(YoutubeService);
         });
 
         afterEach(() => {
-            httpMock.verify();
+            httpMock.verify()
         })
 
 
@@ -34,11 +34,10 @@ describe('YoutubeService', () => {
                         "artworkUrl60": "image.jpg",
                     }]
             };
-            service.getTrendingVideos('EG', 'token').subscribe(
-                data => expect(data).toBeTruthy()
-
-            )
-            const req = httpMock.expectOne(CONFIG.youtubeEndPoint);
+            service.getTrendingVideos('EG', 'token').subscribe(data => {
+                expect(data).toBeTruthy()
+            })
+            const req = httpMock.expectOne(req => req.method === 'GET' && req.url === CONFIG.youtubeEndPoint);
             expect(req.request.method).toBe("GET");
             req.flush(dummy);
         })
@@ -49,9 +48,9 @@ describe('YoutubeService', () => {
                 error => {
                     expect(error).toBeTruthy()
                 });
-                const req = httpMock.expectOne(CONFIG.youtubeEndPoint);
-                expect(req.request.method).toBe("GET");
-                req.flush(Error('err'));
+            const req = httpMock.expectOne(req => req.method === 'GET' && req.url === CONFIG.youtubeEndPoint);
+            expect(req.request.method).toBe("GET");
+            req.flush(Error('err'));
         });
     })
 })

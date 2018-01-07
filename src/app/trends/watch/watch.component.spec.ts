@@ -3,7 +3,8 @@ import { Observable } from 'rxjs/Rx';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {  DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { WatchComponent } from './watch.component';
-import { AppModule } from '../../app.module';
+import { WatchModule } from './watch.module';
+import { ContextService } from '../../shared/context.service';
 
 describe('WatchComponent', () => {
     let component: WatchComponent;
@@ -22,9 +23,10 @@ describe('WatchComponent', () => {
             providers: [
                 { provide: ActivatedRoute, useValue: activatedRouteStub },
                 { provide: DomSanitizer, useValue: domSanitizerStub },
+                ContextService
             ],
             imports: [
-                AppModule
+                WatchModule
             ]
         })
     }));

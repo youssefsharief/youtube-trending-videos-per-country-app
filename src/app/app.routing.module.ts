@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { TrendsComponent } from './trends/trends.component';
-import { WatchComponent } from './trends/watch/watch.component';
 
 const paths: Routes = [
     { path: '', component: TrendsComponent },
-    { path: 'watch/:id', component: WatchComponent },
+    { path: 'watch/:id', loadChildren: './trends/watch/watch.module#WatchModule' },
     { path: '**', redirectTo: '' }
 ]
 
