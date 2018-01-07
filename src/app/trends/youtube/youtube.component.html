@@ -1,7 +1,7 @@
 <page-header [isSearchBar]="true"></page-header>
 
 <div id="youtube" *ngIf="areVideosLoading===false">
-  <div class="row" data-infinite-scroll debounce infiniteScrollDistance="0.1" (scrolled)="onScrollDown()">
+  <div class="row" data-infinite-scroll (scrolled)="onScrollDown()">
     <div class="col-md-4 col-sm-12" *ngFor="let video of trendingVideos; let i = index">
       <div class="card" (click)="onVideoClick(video.id)">
         <div class="img-container">

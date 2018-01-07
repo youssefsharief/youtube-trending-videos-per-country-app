@@ -10,7 +10,7 @@ import 'rxjs/add/operator/first';
 })
 export class WatchComponent {
 
-    public isVideoLoading: boolean;
+    // public isVideoLoading: boolean;
     public embedUrl: SafeResourceUrl
     constructor(
         private route: ActivatedRoute,
@@ -21,7 +21,7 @@ export class WatchComponent {
         this.captureVideoIdThenPlay()
     }
 
-
+    // The video id is passed through a route params
     private captureVideoIdThenPlay() {
         this.route.params.first().subscribe(x => {
             this.play(x.id)
@@ -29,12 +29,14 @@ export class WatchComponent {
     }
 
 
+    // Ask youtube to play the video based on the videoId
     private play(videoId: any): void {
-        this.isVideoLoading = true;
+        // this.isVideoLoading = true;
         this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + videoId + '?autoplay=1');
     }
 
-    public onVideoLoad(): void {
-        this.isVideoLoading = false;
-    }
+    // public onVideoLoad(): void {
+        // this.isVideoLoading = false;
+    // }
+
 }
