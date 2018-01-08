@@ -24,7 +24,7 @@ export class YoutubeComponent implements OnInit {
 
     constructor(
         private youtubeService: YoutubeService,
-        public appContext: ContextService,
+        private appContext: ContextService,
         private router: Router) {
     }
 
@@ -49,14 +49,19 @@ export class YoutubeComponent implements OnInit {
         this.youtubeService.getTrendingVideos(this.country, this.nextPageToken).subscribe((result) => {
             this.nextPageToken = result.nextPageToken
             // Concat videos to current videos so that we do not lose previously fetched videos in case this is not the first batch
-            this.trendingVideos = this.trendingVideos.concat(result.items.map(item => ({
-                id: item.id,
-                title: item.snippet.title,
-                thumbnail: item.snippet.thumbnails.medium.url,
-                publishedAt: moment(item.snippet.publishedAt).fromNow(),
-                viewCount: item.statistics.viewCount,
-                likeCount: item.statistics.likeCount
-            })))
+            this.trendingVideos = this.trendingVideos.concat(result.items.map(item => {
+                if (item.snippet)
+                    return {
+                        id: item.id,
+                        title: item.snippet.title,
+                        thumbnail: item.snippet.thumbnails.medium.url,
+                        publishedAt: moment(item.snippet.publishedAt).fromNow(),
+                        viewCount: item.statistics.viewCount,
+                        likeCount: item.statistics.likeCount
+                    }
+            }
+
+            ))
             this.areVideosLoading = false;
         }, error => {
             this.areVideosLoading = false
@@ -64,12 +69,14 @@ export class YoutubeComponent implements OnInit {
         });
     }
 
-    onVideoClick(id) {
-        this.router.navigate(['/watch', id])
+
+    public onVideoClick(video: Video) {
+        this.appContext.setSelectedVideo(video)
+        this.router.navigate(['/video', video.id])
     }
 
     // Fetch for new videos as the scroll is triggered
-    onScrollDown() {
+    public onScrollDown() {
         this.loadVideos()
     }
 

@@ -13,15 +13,25 @@ export class YoutubeService {
 
     constructor(private http: HttpClient) { }
 
-    getTrendingVideos(country: string, nextPageToken: string) {
+    public getTrendingVideos(country: string, nextPageToken: string) {
         let params = new HttpParams()
         params = params
-        .append('part', 'snippet, statistics, status')
-        .append('chart', 'mostPopular')
-        .append('maxResults', '24').append('key', CONFIG.youtubeApiKey)
+            .append('part', 'snippet, statistics, status')
+            .append('chart', 'mostPopular')
+            .append('maxResults', '24')
+            .append('key', CONFIG.youtubeApiKey)
         if (nextPageToken) params = params.append('pageToken', nextPageToken);
-        if (country) params = params.append('regionCode', country)      
-        return this.http.get(CONFIG.youtubeEndPoint, {params}).catch(this.throwError);
+        if (country) params = params.append('regionCode', country)
+        return this.http.get(`${CONFIG.youtubeEndPoint}/videos`, { params }).catch(this.throwError);
+    }
+
+    public getVideoInfo(id) {
+        let params = new HttpParams()
+        params = params
+            .append('part', 'snippet')
+            .append('id', id)
+            .append('key', CONFIG.youtubeApiKey)
+        return this.http.get(`${CONFIG.youtubeEndPoint}/videos`, { params }).catch(this.throwError);
     }
 
     private throwError(error: any) {

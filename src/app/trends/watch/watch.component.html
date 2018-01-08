@@ -4,9 +4,13 @@
 <br>
 <br>
 <br>
-<div class="video-container container">
-  <!-- <div class="video-load" >
-  </div> -->
-  <div class="loader" *ngIf="isVideoLoading"></div>
-  <iframe title="Video" (load)='onVideoLoad()' width="910" height="512" [src]="embedUrl" frameborder="0" allowfullscreen></iframe>
-</div>
+
+      <div class="video-container container">
+        <!-- <div class="video-load" >
+            </div> -->
+        <div class="loader" *ngIf="isVideoLoading"></div>
+        <iframe title="Video" (load)='onVideoLoad()' width="910" height="512" [src]="embedUrl" frameborder="0" allowfullscreen></iframe>
+        <div class="title">
+            <h1 *ngIf="video">{{video.title}}</h1>
+        </div>    
+      </div>

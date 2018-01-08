@@ -1,7 +1,7 @@
 export class Video {
-    id: string
+    id?: string
     title: string
-    thumbnail: string
-    publishedAt: string
+    thumbnail?: string
+    publishedAt?: string
 }
 

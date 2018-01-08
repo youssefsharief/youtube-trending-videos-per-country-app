@@ -4,7 +4,7 @@ import { TrendsComponent } from './trends/trends.component';
 
 const paths: Routes = [
     { path: '', component: TrendsComponent },
-    { path: 'watch/:id', loadChildren: './trends/watch/watch.module#WatchModule' },
+    { path: 'video/:id', loadChildren: './trends/watch/watch.module#WatchModule' },
     { path: '**', redirectTo: '' }
 ]
 

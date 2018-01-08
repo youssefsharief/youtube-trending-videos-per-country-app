@@ -1,7 +1,10 @@
+import { Video } from '../../shared/models/video';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import 'rxjs/add/operator/first';
+import { ContextService } from '../../shared/context.service';
+import { YoutubeService } from '../youtube/youtube.service';
 
 @Component({
     selector: 'watch',
@@ -10,11 +13,15 @@ import 'rxjs/add/operator/first';
 })
 export class WatchComponent {
 
+    public video: Video
+    public videoId: string
     // public isVideoLoading: boolean;
     public embedUrl: SafeResourceUrl
     constructor(
         private route: ActivatedRoute,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private appContext: ContextService,
+        private youtubeService: YoutubeService,
     ) { }
 
     ngOnInit() {
@@ -24,19 +31,35 @@ export class WatchComponent {
     // The video id is passed through a route params
     private captureVideoIdThenPlay() {
         this.route.params.first().subscribe(x => {
-            this.play(x.id)
+            this.getSelectedVideoOrFetchItIfNotAvailable(x.id)
         })
     }
 
+
+    private getSelectedVideoOrFetchItIfNotAvailable (id) {
+        this.videoId = id
+        this.play(id)
+        this.video = this.appContext.getSelectedVideo()
+        if(!this.video) this.youtubeService.getVideoInfo(id).subscribe(
+            data => {
+                this.video = {
+                title: data.items[0].snippet.title,
+            }
+            
+        },
+            error => console.log(error)          
+        )
+    }
 
     // Ask youtube to play the video based on the videoId
     private play(videoId: any): void {
         // this.isVideoLoading = true;
         this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + videoId + '?autoplay=1');
+        
     }
 
-    // public onVideoLoad(): void {
+    public onVideoLoad(): void {
         // this.isVideoLoading = false;
-    // }
+    }
 
 }

@@ -1,3 +1,7 @@
 iframe, object, embed {
     max-width: 100%;
 }
+
+.title {
+    width: 910px
+}
