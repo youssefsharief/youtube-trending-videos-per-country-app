@@ -44,7 +44,7 @@ export class YoutubeComponent implements OnInit {
     }
 
     private loadVideos(): void {
-        // show loader only if we are fetching the first batch of videos
+        // Show loader only if we are fetching the first batch of videos
         if (!this.nextPageToken) this.areVideosLoading = true;
         this.youtubeService.getTrendingVideos(this.country, this.nextPageToken).subscribe((result) => {
             this.nextPageToken = result.nextPageToken
@@ -52,7 +52,7 @@ export class YoutubeComponent implements OnInit {
             this.trendingVideos = this.trendingVideos.concat(result.items.map(item => ({
                 id: item.id,
                 title: item.snippet.title,
-                thumbnail: item.snippet.thumbnails.high.url,
+                thumbnail: item.snippet.thumbnails.medium.url,
                 publishedAt: moment(item.snippet.publishedAt).fromNow(),
                 viewCount: item.statistics.viewCount,
                 likeCount: item.statistics.likeCount
@@ -68,7 +68,7 @@ export class YoutubeComponent implements OnInit {
         this.router.navigate(['/watch', id])
     }
 
-    // fetch for new videos as the scroll is triggered
+    // Fetch for new videos as the scroll is triggered
     onScrollDown() {
         this.loadVideos()
     }

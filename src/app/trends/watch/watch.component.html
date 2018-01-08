@@ -5,8 +5,8 @@
 <br>
 <br>
 <div class="video-container container">
-  <!-- <div class="video-load" *ngIf="isVideoLoading">
-    <div class="loader" style="margin-top: 75px;"></div>
+  <!-- <div class="video-load" >
   </div> -->
+  <div class="loader" *ngIf="isVideoLoading"></div>
   <iframe title="Video" (load)='onVideoLoad()' width="910" height="512" [src]="embedUrl" frameborder="0" allowfullscreen></iframe>
 </div>

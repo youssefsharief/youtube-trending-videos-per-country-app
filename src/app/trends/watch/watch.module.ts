@@ -1,6 +1,6 @@
+import { WatchRoutingModule } from './watch-routing.module';
 import { WatchComponent } from './watch.component';
 import { NgModule } from '@angular/core';
-import { WatchRoutingModule } from './watch.routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
