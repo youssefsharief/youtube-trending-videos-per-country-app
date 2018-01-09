@@ -6,9 +6,6 @@
 <br>
 
 <div class="video-container container">
-    <!-- <div class="video-load" >
-            </div> -->
-    <div class="loader" *ngIf="isVideoLoading"></div>
     <iframe title="Video" width="910" height="512" [src]="embedUrl" frameborder="0" allowfullscreen></iframe>
     <div class="title">
         <h1 *ngIf="videoInfo">{{videoInfo.title}}</h1>
