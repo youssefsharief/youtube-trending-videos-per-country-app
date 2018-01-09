@@ -31,7 +31,7 @@ describe('WatchComponent', () => {
                 { provide: YoutubeService, useValue: {} },
                 { provide: ContextService, useValue: {} },
 
-                
+
             ],
             imports: [
                 WatchModule
@@ -47,23 +47,23 @@ describe('WatchComponent', () => {
     });
 
     it('should create', () => {
-        contextService.getSelectedVideo = () => ({title:'dsd', id: 'sd'})
-        youtubeService.getVideoInfo = () => Observable.of(reponse) 
+        contextService.getSelectedVideo = () => ({ title: 'dsd', id: 'sd' })
+        youtubeService.getVideoInfo = () => Observable.of(reponse)
         expect(component).toBeTruthy();
     });
 
-    
+
 
     it('should load video info from context service', () => {
-        contextService.getSelectedVideo = () => ({title:'dsd', id: 'sd'})
-        youtubeService.getVideoInfo = () => Observable.of(reponse) 
+        contextService.getSelectedVideo = () => ({ title: 'dsd', id: 'sd' })
+        youtubeService.getVideoInfo = () => Observable.of(reponse)
         component.ngOnInit()
         expect(component).toBeTruthy();
     });
 
     it('should load video from api after refresh', () => {
         contextService.getSelectedVideo = () => (null)
-        youtubeService.getVideoInfo = () => Observable.of(reponse) 
+        youtubeService.getVideoInfo = () => Observable.of(reponse)
         component.ngOnInit()
         expect(component).toBeTruthy();
     });

@@ -1,26 +1,21 @@
 <ng-template #typeAheadTemplate let-country="result" let-t="term">
-  	{{ country.name }}
+    {{ country.name }}
 </ng-template>
 <div id="page-header">
-  <nav class="navbar navbar-default navbar-fixed-top">
-		<div class="col-md-3" routerLink="/">
-			<a href="">
-				<span class="glyphicon glyphicon-flash" aria-hidden="true" href="#"></span>
-			<span class="header-text">trendings</span>
-			</a>
-			
-	  </div>
-		<div class="col-md-6 col-xs-12" *ngIf="isSearchBar">
-	    	<div class="form-group">
-	  			<input type="text"
-	  				   class="form-control"
-	  				   placeholder="Enter your country"
-	  				   [(ngModel)]="selectedCountry"
-	  				   [ngbTypeahead]="search"
-	  				   [resultTemplate]="typeAheadTemplate"
-	  				   [inputFormatter]="formatter"
-	  				   (ngModelChange)="selectCountry(selectedCountry)" />
-			  </div>
-	  </div>
-	</nav>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="col-md-3" routerLink="/">
+            <a href="">
+                <span class="glyphicon glyphicon-flash" aria-hidden="true" href="#"></span>
+                <span class="header-text">trendings</span>
+            </a>
+
+        </div>
+        <div class="col-md-6 col-xs-12" *ngIf="isSearchBar">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Enter your country" [(ngModel)]="selectedCountry" [ngbTypeahead]="search"
+                    [resultTemplate]="typeAheadTemplate" [inputFormatter]="formatter" (ngModelChange)="selectCountry(selectedCountry)"
+                />
+            </div>
+        </div>
+    </nav>
 </div>

@@ -15,27 +15,27 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LimitToPipe,
-    TrendsComponent,
-    YoutubeComponent,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    NgbModule.forRoot(),
-    InfiniteScrollModule,
-    SharedModule
-  ],
+    declarations: [
+        AppComponent,
+        LimitToPipe,
+        TrendsComponent,
+        YoutubeComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        NgbModule.forRoot(),
+        InfiniteScrollModule,
+        SharedModule
+    ],
 
-  providers: [
-    ContextService,
-    YoutubeService,
-    { provide: APP_BASE_HREF, useValue: '/' }
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        ContextService,
+        YoutubeService,
+        { provide: APP_BASE_HREF, useValue: '/' }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

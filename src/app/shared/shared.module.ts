@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
         HeaderComponent,
         CommonModule
     ],
-    imports:[
+    imports: [
         FormsModule,
         CommonModule,
         NgbModule.forRoot(),

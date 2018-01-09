@@ -15,15 +15,15 @@ describe('YoutubeComponent', () => {
     let fixture: ComponentFixture<YoutubeComponent>;
     let youtubeServiceStub = {}
     let contextServiceStub = {
-        selectedVideo : null,
-        getSelectedVideo(){
+        selectedVideo: null,
+        getSelectedVideo() {
             return this.selectedVideo
         },
         setSelectedVideo(x) {
             this.selectedVideo = x
         },
         countryChanged: new EventEmitter()
-        
+
     }
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -75,9 +75,9 @@ describe('YoutubeComponent', () => {
 
 
 
-    it('should set video in context service when video is clicked', ()=>{
+    it('should set video in context service when video is clicked', () => {
         youtubeServiceStub = { getTrendingVideos: () => Observable.of(reponse) }
-        component.onVideoClick({id:'sdsd', title: 'This is a title'})
+        component.onVideoClick({ id: 'sdsd', title: 'This is a title' })
     })
 
 

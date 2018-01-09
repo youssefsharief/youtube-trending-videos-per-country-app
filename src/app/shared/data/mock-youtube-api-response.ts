@@ -1,20 +1,20 @@
 
 export const reponse = {
     nextPageToken: 'CHSDLJ',
-    items:[
+    items: [
         {
-            statistics:{
+            statistics: {
                 viewCount: 1000,
                 likeCount: 50
             },
-            snippet:{
+            snippet: {
                 publishedAt: Date.now(),
-                title:'TT',
-                thumbnails:{
-                    high:{
+                title: 'TT',
+                thumbnails: {
+                    high: {
                         url: 'http://url'
-                    }, 
-                    medium:{
+                    },
+                    medium: {
                         url: 'http://url'
                     }
                 }
@@ -27,9 +27,9 @@ export const reponse = {
 
 export const reponseWithoutSnippet = {
     nextPageToken: 'CHSDLJ',
-    items:[
+    items: [
         {
-            
+
         }
     ]
 }

@@ -11,12 +11,12 @@ import { ContextService } from '../context.service';
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
-    let contextServiceStub = { setCountry : (x) => console.log(x)}
+    let contextServiceStub = { setCountry: (x) => console.log(x) }
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [SharedModule],
             providers: [
-                {provide: ContextService, useValue: contextServiceStub}
+                { provide: ContextService, useValue: contextServiceStub }
             ]
         })
     }));
@@ -32,11 +32,11 @@ describe('HeaderComponent', () => {
     });
 
     it('formatter should returun name from object', () => {
-        expect(component.formatter({name:'er'})).toBe('er')
+        expect(component.formatter({ name: 'er' })).toBe('er')
     });
 
 
-    describe('search observable',()=>{
+    describe('search observable', () => {
         it('search return country code in subscription', () => {
             const sub = component.search(Observable.of('Egyp')).subscribe(data => {
                 expect(data[0].code).toBe('EG')
@@ -50,11 +50,11 @@ describe('HeaderComponent', () => {
             sub.unsubscribe()
         });
     })
-    
 
-    describe('Select country', ()=>{
+
+    describe('Select country', () => {
         it('should select country object', () => {
-            component.selectCountry({code:'EG'})
+            component.selectCountry({ code: 'EG' })
             expect(component).toBeTruthy()
         });
         it('should select country string', () => {
@@ -62,5 +62,5 @@ describe('HeaderComponent', () => {
             expect(component).toBeTruthy()
         });
     })
-    
+
 });
