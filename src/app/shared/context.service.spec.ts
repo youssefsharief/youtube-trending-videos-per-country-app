@@ -15,4 +15,9 @@ describe('ContextService', () => {
         expect(service.country).toBe('Egy')
         expect(service.getCountry()).toBe('Egy')
     }));
+
+    it('should set video', inject([ContextService], (service: ContextService) => {
+        service.setSelectedVideo({title: 'ds'})
+        expect(service.getSelectedVideo().title).toBe('ds')
+    }));
 });

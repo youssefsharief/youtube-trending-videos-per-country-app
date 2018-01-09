@@ -6,15 +6,22 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { YoutubeService } from './youtube.service';
 import { YoutubeComponent } from './youtube.component';
-import { reponse } from '../../shared/data/mock-youtube-api-response';
+import { reponse, reponseWithoutSnippet } from '../../shared/data/mock-youtube-api-response';
 import { EventEmitter } from '@angular/core';
 
 
 describe('YoutubeComponent', () => {
     let component: YoutubeComponent;
     let fixture: ComponentFixture<YoutubeComponent>;
-    let youtubeServiceStub = { getTrendingVideos: () => Observable.of(reponse) }
+    let youtubeServiceStub = {}
     let contextServiceStub = {
+        selectedVideo : null,
+        getSelectedVideo(){
+            return this.selectedVideo
+        },
+        setSelectedVideo(x) {
+            this.selectedVideo = x
+        },
         countryChanged: new EventEmitter()
         
     }
@@ -27,6 +34,7 @@ describe('YoutubeComponent', () => {
 
             ]
         })
+        youtubeServiceStub = TestBed.get(YoutubeService);
     }));
 
     beforeEach(() => {
@@ -35,23 +43,42 @@ describe('YoutubeComponent', () => {
     });
 
     it('should create', () => {
+        youtubeServiceStub = { getTrendingVideos: () => Observable.of(reponse) }
         expect(component).toBeTruthy();
     });
 
-    it('should load', () => {
+    it('should load videos', () => {
+        youtubeServiceStub = { getTrendingVideos: () => Observable.of(reponse) }
         component.ngOnInit()
         expect(component).toBeTruthy();
     });
 
-    // fit('should load videos for new country when app context emits event', () => {
-    //     component.ngOnInit()
-    //     expect(component).toBeTruthy();
-    // });
-
-    it('onScrollDown should work', () => {
-        component.onScrollDown()
-        expect(component).toBeTruthy()
+    it('should load videos without snippet', () => {
+        youtubeServiceStub = { getTrendingVideos: () => Observable.of(reponseWithoutSnippet) }
+        component.ngOnInit()
+        expect(component).toBeTruthy();
     });
+
+    it('should load videos after scrolling', () => {
+        youtubeServiceStub = { getTrendingVideos: () => Observable.of(reponse) }
+        component.ngOnInit()
+        expect(component).toBeTruthy();
+        component.onScrollDown()
+        expect(component).toBeTruthy();
+    });
+
+    it('should respond to error', () => {
+        youtubeServiceStub = { getTrendingVideos: () => Observable.throw(Error('err')) }
+        component.ngOnInit()
+        expect(component).toBeTruthy();
+    });
+
+
+
+    it('should set video in context service when video is clicked', ()=>{
+        youtubeServiceStub = { getTrendingVideos: () => Observable.of(reponse) }
+        component.onVideoClick({id:'sdsd', title: 'This is a title'})
+    })
 
 
 });

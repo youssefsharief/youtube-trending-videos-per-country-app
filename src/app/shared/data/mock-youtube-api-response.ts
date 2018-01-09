@@ -13,9 +13,23 @@ export const reponse = {
                 thumbnails:{
                     high:{
                         url: 'http://url'
+                    }, 
+                    medium:{
+                        url: 'http://url'
                     }
                 }
             }
+        }
+    ]
+}
+
+
+
+export const reponseWithoutSnippet = {
+    nextPageToken: 'CHSDLJ',
+    items:[
+        {
+            
         }
     ]
 }
