@@ -13,9 +13,7 @@ import { YoutubeService } from '../youtube/youtube.service';
 })
 export class WatchComponent {
 
-    public video: Video
-    public videoId: string
-    // public isVideoLoading: boolean;
+    public videoInfo: Video
     public embedUrl: SafeResourceUrl
     constructor(
         private route: ActivatedRoute,
@@ -37,12 +35,11 @@ export class WatchComponent {
 
 
     private getSelectedVideoOrFetchItIfNotAvailable (id) {
-        this.videoId = id
         this.play(id)
-        this.video = this.appContext.getSelectedVideo()
-        if(!this.video) this.youtubeService.getVideoInfo(id).subscribe(
+        this.videoInfo = this.appContext.getSelectedVideo()
+        if(!this.videoInfo) this.youtubeService.getVideoInfo(id).subscribe(
             data => {
-                this.video = {
+                this.videoInfo = {
                 title: data.items[0].snippet.title,
             }
             
@@ -53,13 +50,8 @@ export class WatchComponent {
 
     // Ask youtube to play the video based on the videoId
     private play(videoId: any): void {
-        // this.isVideoLoading = true;
         this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + videoId + '?autoplay=1');
-        
     }
 
-    public onVideoLoad(): void {
-        // this.isVideoLoading = false;
-    }
 
 }
