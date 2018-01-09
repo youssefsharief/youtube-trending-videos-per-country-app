@@ -76,7 +76,7 @@ describe('YoutubeService', () => {
 
 
         describe('getVideoInfo', () => {
-            it('should get video Info successfully', () => {
+            it('should get video info successfully', () => {
                 let dummy = {
                     "resultCount": 1,
                     "results": [
