@@ -31,13 +31,13 @@ export class YoutubeComponent implements OnInit {
 
     ngOnInit() {
         this.loadVideos();
-        this.subscribeToCountryChanges()
+        this.subscribeToCountryChanges();
     }
 
     private subscribeToCountryChanges() {
         this.appContext.countryChanged.subscribe(lang => {
-            this.nextPageToken = ''
-            this.trendingVideos = []
+            this.nextPageToken = '';
+            this.trendingVideos = [];
             this.country = this.appContext.getCountry();
             this.loadVideos();
         })
@@ -45,31 +45,35 @@ export class YoutubeComponent implements OnInit {
 
     private loadVideos(): void {
         // Show loader only if we are fetching the first batch of videos
-        if (!this.nextPageToken) this.areVideosLoading = true;
+        if (!this.nextPageToken) {
+            this.areVideosLoading = true;
+        }
         this.youtubeService.getTrendingVideos(this.country, this.nextPageToken).subscribe((result) => {
-            this.nextPageToken = result.nextPageToken
+            this.nextPageToken = result.nextPageToken;
             // Concat videos to current videos so that we do not lose previously fetched videos in case this is not the first batch
-            this.trendingVideos = this.trendingVideos.concat(result.items.map(item => {
-                // Only include undeleted YouTube videos by checking that the snippet property exists
-                if (item.snippet)
-                    return {
-                        id: item.id,
-                        title: item.snippet.title,
-                        thumbnail: item.snippet.thumbnails.medium.url,
-                        publishedAt: moment(item.snippet.publishedAt).fromNow(),
-                        viewCount: item.statistics.viewCount,
-                        likeCount: item.statistics.likeCount
-                    }
-            }
-
-            ))
+            const newVideos = result.items.map(item => {
+                if (item.snippet) {
+                    return this.getComponentScopeObjectFromPayload(item);
+                }
+            });
+            this.trendingVideos = this.trendingVideos.concat(newVideos);
             this.areVideosLoading = false;
         }, error => {
-            this.areVideosLoading = false
-            this.isErrorInApi = true
+            this.areVideosLoading = false;
+            this.isErrorInApi = true;
         });
     }
 
+    private getComponentScopeObjectFromPayload(item) {
+        return {
+            id: item.id,
+            title: item.snippet.title,
+            thumbnail: item.snippet.thumbnails.medium.url,
+            publishedAt: moment(item.snippet.publishedAt).fromNow(),
+            viewCount: item.statistics.viewCount,
+            likeCount: item.statistics.likeCount
+        };
+    }
 
     public onVideoClick(video: Video) {
         this.appContext.setSelectedVideo(video)
