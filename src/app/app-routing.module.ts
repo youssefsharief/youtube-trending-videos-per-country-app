@@ -5,8 +5,7 @@ import { TrendsComponent } from './trends/trends.component';
 const paths: Routes = [
     { path: '', component: TrendsComponent },
     { path: 'video/:id', loadChildren: './trends/watch/watch.module#WatchModule' },
-    { path: '**', redirectTo: '' }
-]
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(paths)],
